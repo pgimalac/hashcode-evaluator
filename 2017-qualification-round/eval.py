@@ -1,64 +1,58 @@
-class Endpoint:
-    def __init__(self, id, server_latency):
-        self.id = id
-        self.server_latency = server_latency
-        self.cache_servers = list()
+import sys
 
-    def add_cache_server(self, id, latency):
-        self.cache_servers.append((id, latency))
+# input files
+V, E, R, C, X = map(int, input().split())
+sizes = list(map(int, input().split()))
 
-class Request:
-    def __init__(self, video, endpoint, nb_request):
-        self.video = video
-        self.endpoint = endpoint
-        self.nb_request = nb_request
+endpoints = []
+for _ in range(E):
+    latency, K = map(int, input().split())
 
-class Server:
-    def __init__(self, info):
-        self.id = info[0]
-        self.videos = info[1:]
+    datas = {}
+    for _ in range(K):
+        c, lc = map(int, input().split())
+        datas[c] = lc
+    endpoints.append((latency, datas))
 
-    def add_video(self, id_vid):
-        videos.append(id_vid)
+requests = []
+for _ in range(R):
+    rv, re, rn = map(int, input().split())
+    requests.append((rv, re, rn))
 
-def score(videos, endpoints, requests, servers):
-    score = 0
-    total_nb_request = 0
-    for r in requests:
-        Ld = endpoints[r.endpoint].server_latency
-        L = [Ld]
-        for id_serv, latency in endpoints[r.endpoint].cache_servers:
-            if id_serv in servers and r.video in servers[id_serv].videos:
-                L.append(latency)
-        total_nb_request += r.nb_request
-        score += (Ld - min(L))*r.nb_request
-    print(int(score * 1000 / total_nb_request))
+# output file
+N = int(input())
+if N < 0 or N > C:
+    print("Invalid number of cache server ({})".format(N))
+    sys.exit(1)
 
-if __name__ == "__main__":
-    V, E, R, C, X = map(int, input().split())
+servers = {}
+for i in range(2, N + 2):
+    line = list(map(int, input().split()))
+    ident = line[0]
+    if ident < 0 or ident >= C:
+        print("Line {}: invalid id ({})".format(i, ident))
+        sys.exit(1)
+    if ident in servers:
+        print("Server {} appears multiple times".format(ident))
+        sys.exit(1)
+    videos = line[1:]
+    servers[ident] = set(videos)
+    if len(servers[ident]) != len(videos):
+        print("Line {}: a videos appears multiple times".format(i))
+        sys.exit(1)
+    weight = sum([sizes[v] for v in videos])
+    if weight > X:
+        print("Line {}: the total size of the videos is over the capacity of the server".format(i))
 
-    videos = list(map(int, input().split()))
-
-    endpoints = {}
-    for i in range(E):
-        latency, K = map(int, input().split())
-        endpoint = Endpoint(i, latency)
-        for j in range(K):
-            ident, serverlatency = map(int, input().split())
-            endpoint.add_cache_server(ident, serverlatency)
-        endpoints[i] = endpoint
-
-    requests = list()
-    for i in range(R):
-        id_vid, id_end, nb_request = map(int, input().split())
-        requests.append(Request(id_vid, id_end, nb_request))
-
-    # début de la lecture de la solution
-    
-    S = int(input())
-    servers = {}
-    for i in range(S):
-        info = list(map(int, input().split()))
-        servers[info[0]] = Server(info)
-
-    score(videos, endpoints, requests, servers)
+# scoring
+score = 0
+total_nb_request = 0
+for (rv, re, rn) in requests:
+    Ld = endpoints[re][0]
+    L = [Ld]
+    for id_serv, latency in endpoints[re][1].items():
+        if id_serv in servers and rv in servers[id_serv]:
+            L.append(latency)
+    total_nb_request += rn
+    score += (Ld - min(L)) * rn
+print(int(score * 1000 / total_nb_request))

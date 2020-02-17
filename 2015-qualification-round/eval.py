@@ -19,7 +19,6 @@ row_serv = [[] for _ in range(R)]
 numbers = [0 for _ in range(R)]
 server_to_pool = [-1 for _ in range(M)]
 for server, line in enumerate(sys.stdin):
-    # print(server, ":", line)
     if server >= M:
         print("There are too much lines")
         sys.exit(1)
