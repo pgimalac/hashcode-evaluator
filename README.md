@@ -13,6 +13,7 @@ Evaluators for hashcode past problems. Also contains input files and subjects.
 - [ ] 2018 final round
 - [x] 2019 qualification round
 - [ ] 2019 final round
+- [x] 2020 qualification round
 
 ## Use
 `file.out` is the out file of `file.in`.
