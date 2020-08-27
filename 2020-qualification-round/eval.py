@@ -1,26 +1,34 @@
 import sys
 
+
 def error(s):
     print(s, file=sys.stderr)
     sys.exit(1)
 
+
 def readints():
     return map(int, input().split())
+
 
 def readint():
     return int(input())
 
+
 def readsplit():
     return input().split()
+
 
 def readlistint():
     return list(readints())
 
+
 def readsetint():
     return set(readints())
 
+
 def readlist():
     return list(readsplit())
+
 
 # input file
 B, L, D = readints()
@@ -45,18 +53,28 @@ for i in range(A):
     Y, K = readints()
     Nj, Tj, Mj, idset = libraries[Y]
     if Y < 0 or Y >= L:
-        error("Line {} ({}th library printed): the id must be between 0 and {}".format(2 * i + 2, i, L))
+        error(
+            "Line {} ({}th library printed): the id must be between 0 and {}".
+            format(2 * i + 2, i, L))
     if K < 1 or K > Nj:
-        error("Line {} ({}: {}th library printed): the number of books scanned from the library must positive and lower than the number of books in the library ({})".format(2 * i + 2, Y, i, Nj))
+        error(
+            "Line {} ({}: {}th library printed): the number of books scanned from the library must positive and lower than the number of books in the library ({})"
+            .format(2 * i + 2, Y, i, Nj))
     ids = readlistint()
     if len(ids) != K:
-        error("Line {} ({}: {}th library printed): there must be as many books as printed".format(2 * i + 3, Y, i))
+        error(
+            "Line {} ({}: {}th library printed): there must be as many books as printed"
+            .format(2 * i + 3, Y, i))
     if len(ids) != len(set(ids)):
-        error("Line {} ({}: {}th library printed): the ids of the books must be distincts".format(2 * i + 3, Y, i))
+        error(
+            "Line {} ({}: {}th library printed): the ids of the books must be distincts"
+            .format(2 * i + 3, Y, i))
 
     for e in ids:
         if not e in idset:
-            error("Line {} ({}: {}th library printed): all scanned books must be in the library".format(2 * i + 3, Y, i))
+            error(
+                "Line {} ({}: {}th library printed): all scanned books must be in the library"
+                .format(2 * i + 3, Y, i))
 
     time += Tj
     n = min(K, (D - time) * Mj)

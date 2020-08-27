@@ -43,7 +43,8 @@ for j, line in enumerate(sys.stdin):
             print("Line {}: {} is not a valid ride number".format(j, num))
             sys.exit(1)
         if assigned[num] is not None:
-            print("Line {}: ride {} was already assigned to {}".format(j, num, assigned[num]))
+            print("Line {}: ride {} was already assigned to {}".format(
+                j, num, assigned[num]))
             sys.exit(1)
         assigned[num] = j
         if time < s:

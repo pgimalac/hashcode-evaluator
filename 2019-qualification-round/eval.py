@@ -25,10 +25,13 @@ for line_num in range(2, 2 + slides):
     if len(line) == 1:
         i = int(line[0])
         if not orient[i]:
-            print("Line {}: two photos are needed for vertical pictures".format(line_num))
+            print(
+                "Line {}: two photos are needed for vertical pictures".format(
+                    line_num))
             sys.exit(1)
         if used[i]:
-            print("Line {}: photo {} has already been used".format(line_num, i))
+            print("Line {}: photo {} has already been used".format(
+                line_num, i))
             sys.exit(1)
         used[i] = True
         tag = tags[i]
@@ -41,11 +44,13 @@ for line_num in range(2, 2 + slides):
             print("Line {}: both photos aren't vertical".format(line_num))
             sys.exit(1)
         if used[i]:
-            print("Line {}: photo {} has already been used".format(line_num, i))
+            print("Line {}: photo {} has already been used".format(
+                line_num, i))
             sys.exit(1)
         used[i] = True
         if used[j]:
-            print("Line {}: photo {} has already been used".format(line_num, j))
+            print("Line {}: photo {} has already been used".format(
+                line_num, j))
             sys.exit(1)
         used[j] = True
         tag = tags[i] | tags[j]

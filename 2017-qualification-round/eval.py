@@ -42,7 +42,9 @@ for i in range(2, N + 2):
         sys.exit(1)
     weight = sum([sizes[v] for v in videos])
     if weight > X:
-        print("Line {}: the total size of the videos is over the capacity of the server".format(i))
+        print(
+            "Line {}: the total size of the videos is over the capacity of the server"
+            .format(i))
 
 # scoring
 score = 0

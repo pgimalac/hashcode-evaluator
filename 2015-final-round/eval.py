@@ -1,8 +1,10 @@
 import sys
 
+
 def error(s):
     print(s, file=sys.stderr)
     sys.exit(1)
+
 
 # input file
 R, C, A = map(int, input().split())
@@ -25,9 +27,12 @@ for i in range(A):
         alt.append(row)
     power.append(alt)
 
+
 # helper function
 def inRange(pos1, pos2):
-    return (pos1[0] - pos2[0])**2 + min(abs(pos1[1] - pos2[1]), C - abs(pos1[1] - pos2[1]))**2 <= V**2
+    return (pos1[0] - pos2[0])**2 + min(abs(pos1[1] - pos2[1]),
+                                        C - abs(pos1[1] - pos2[1]))**2 <= V**2
+
 
 # output file
 alti = [0] * B
@@ -52,7 +57,8 @@ for num, line in enumerate(sys.stdin):
         if alti[i] <= 1 and d == -1:
             error("Line {}: balloon {} cannot go down".format(num, i + 1))
         if alti[i] == A and d == 1:
-            error("Line {}: balloon {} cannot go over {}".format(num, i + 1, A))
+            error("Line {}: balloon {} cannot go over {}".format(
+                num, i + 1, A))
 
         alti[i] += d
 

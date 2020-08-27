@@ -35,14 +35,18 @@ for server, line in enumerate(sys.stdin):
             print("Line {}: Invalid pool".format(server + 1))
             sys.exit(1)
         if s + servers[server][0] > S:
-            print("Line {}: the server extends beyond the size of the row".format(server + 1))
+            print("Line {}: the server extends beyond the size of the row".
+                  format(server + 1))
             sys.exit(1)
         for i in range(s, s + servers[server][0]):
             if pool[r][i] == -1:
-                print("Line {}: the server is positionned on an unavailable slot".format(server + 1))
+                print(
+                    "Line {}: the server is positionned on an unavailable slot"
+                    .format(server + 1))
                 sys.exit(1)
             if pool[r][i] is not None:
-                print("Line {}: the server is positionned on another server".format(server + 1))
+                print("Line {}: the server is positionned on another server".
+                      format(server + 1))
                 sys.exit(1)
             pool[r][i] = server
 
@@ -54,7 +58,11 @@ for server, line in enumerate(sys.stdin):
 gcs = [[] for _ in range(P)]
 for i in range(P):
     for r in range(R):
-        gcs[i].append(sum([servers[server][1] for server in row_serv[r] if server_to_pool[server] == i]))
+        gcs[i].append(
+            sum([
+                servers[server][1] for server in row_serv[r]
+                if server_to_pool[server] == i
+            ]))
 
 score = min([pool_cap[i] - max(gcs[i]) for i in range(P)])
 print(score)
